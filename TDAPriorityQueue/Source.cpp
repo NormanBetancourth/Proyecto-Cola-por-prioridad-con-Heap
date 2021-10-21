@@ -4,9 +4,15 @@
 
 int main() {
     ListaDoble<int>* listaEnteros = new ListaDoble<int>;
-    listaEnteros->agregarAlInicio(new int(20));
-    listaEnteros->agregarAlInicio(new int(30));
-    listaEnteros->agregarAlInicio(new int(40));
+
+    listaEnteros->insertar(new int(2));
+    listaEnteros->insertar(new int(4));
+    listaEnteros->insertar(new int(1));
+    listaEnteros->insertar(new int(5));
+    listaEnteros->insertar(new int(0));
+    listaEnteros->insertar(new int(10));
+    listaEnteros->insertar(new int(3));
+
 
     IteradorListaDoble<int>* itEnt = listaEnteros->crearInterador();
     for (itEnt->begin(); !itEnt->isEnd(); itEnt->next()) {
@@ -14,6 +20,5 @@ int main() {
     }
 
     delete listaEnteros;
-
-	return 0;
+    return 0;
 }
