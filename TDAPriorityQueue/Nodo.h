@@ -2,7 +2,7 @@
 #define TDAPRIORITYQUEUE_NODO_H
 
 template<class T>
-class Nodo {
+class Nodo {   //a //e
 private:
 	T* dato;
 	Nodo* next;
