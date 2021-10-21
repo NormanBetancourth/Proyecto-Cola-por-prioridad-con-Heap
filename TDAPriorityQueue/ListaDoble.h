@@ -12,6 +12,7 @@ class ListaDoble {
 private:
 	Nodo<T>* inicio;
 	Nodo<T>* fin;
+	int cuentaNodos;
 public:
 	ListaDoble();
 	~ListaDoble();
@@ -25,6 +26,9 @@ public:
 	void agregarAlFinal(T*);
 	std::string toString();
 	IteradorListaDoble<T>* crearInterador()const;
+	void insertar(T*);
+	void heapify(Nodo<T>*, int);
+	void swap(Nodo<T>*, Nodo<T>*);
 };
 
 template<class T>
@@ -129,5 +133,59 @@ template<class T>
 inline IteradorListaDoble<T>* ListaDoble<T>::crearInterador() const{
 	return new IteradorListaDoble<T>(this);
 }
+
+template<class T>
+inline void ListaDoble<T>::insertar(T* value)
+{
+	Nodo<T>* tmp = fin->getPrev();
+	Nodo<T>* nuevo = new Nodo<T>(value);
+	nuevo->setNext(nullptr);
+	nuevo->setPrev(fin->getPrev());
+	fin->setPrev(nuevo);
+	if (tmp != nullptr) {
+		tmp->setNext(nuevo);
+	}
+	if (inicio->getNext() == nullptr) {
+		inicio->setNext(nuevo);
+	}
+
+	cuentaNodos++;
+	heapify(nuevo, (cuentaNodos-1)/2);
+}
+
+template<class T>
+inline void ListaDoble<T>::heapify(Nodo<T>* actual, int index)
+{
+	Nodo<T>* padreNodo = inicio->getNext();
+	int counter = 0;
+	while (counter != index)
+	{
+		padreNodo = padreNodo->getNext();
+		counter++;
+	}
+
+	std::cout <<"heappy: " << *(padreNodo->getDato()) << std::endl;
+	//eventualmente se llega al padre
+	if (actual != inicio->getNext() && *(padreNodo->getDato()) < *(actual->getDato()))
+	{
+		swap(actual, padreNodo);
+		heapify(padreNodo, (index - 1) / 2);
+	}
+}
+
+template<class T>
+inline void ListaDoble<T>::swap(Nodo<T>* actual, Nodo<T>* padre)
+{
+	auto auxAnterior = actual->prev;
+	auto auxSig = actual->prev;
+
+	actual->setNext(padre->next);
+	actual->setPrev(padre->prev);
+
+	padre->setNext(auxSig);
+	padre->setPrev(auxAnterior);
+}
+
+
 
 #endif 

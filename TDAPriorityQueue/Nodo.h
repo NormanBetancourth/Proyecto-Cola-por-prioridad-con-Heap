@@ -3,7 +3,7 @@
 
 template<class T>
 class Nodo {   //a //e
-private:
+public:
 	T* dato;
 	Nodo* next;
 	Nodo* prev;
