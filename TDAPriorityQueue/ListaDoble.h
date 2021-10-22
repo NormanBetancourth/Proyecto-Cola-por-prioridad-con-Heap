@@ -3,6 +3,7 @@
 
 #include"Nodo.h"
 #include<string>
+#include<sstream>
 
 template<class T>
 class IteradorListaDoble;
@@ -29,16 +30,19 @@ public:
 	void insertar(T*);
 	void heapify(Nodo<T>*, int);
 	void swap(Nodo<T>*, Nodo<T>*);
+	void refreshOuterPointers(Nodo<T>* A);
+	int areTheyNeighbours(Nodo<T>* A, Nodo<T>* B);
+
 };
 
 template<class T>
-inline ListaDoble<T>::ListaDoble(){
+inline ListaDoble<T>::ListaDoble() {
 	inicio = new Nodo<T>;
 	fin = new Nodo<T>;
 }
 
 template<class T>
-inline ListaDoble<T>::~ListaDoble(){
+inline ListaDoble<T>::~ListaDoble() {
 	Nodo<T>* temporal = inicio->getNext();
 	while (temporal != nullptr) {
 		inicio->setNext(temporal->getNext());
@@ -48,37 +52,37 @@ inline ListaDoble<T>::~ListaDoble(){
 }
 
 template<class T>
-inline Nodo<T>* ListaDoble<T>::getInicio() const{
+inline Nodo<T>* ListaDoble<T>::getInicio() const {
 	return inicio;
 }
 
 template<class T>
-inline Nodo<T>* ListaDoble<T>::getFin() const{
+inline Nodo<T>* ListaDoble<T>::getFin() const {
 	return fin;
 }
 
 template<class T>
-inline Nodo<T>* ListaDoble<T>::getPrimero() const{
+inline Nodo<T>* ListaDoble<T>::getPrimero() const {
 	return inicio->getNext();
 }
 
 template<class T>
-inline void ListaDoble<T>::setInicio(Nodo<T>* inicio){
+inline void ListaDoble<T>::setInicio(Nodo<T>* inicio) {
 	this->inicio = inicio;
 }
 
 template<class T>
-inline Nodo<T>* ListaDoble<T>::getUltimo(){
+inline Nodo<T>* ListaDoble<T>::getUltimo() {
 	return fin->getPrev();
 }
 
 template<class T>
-inline void ListaDoble<T>::setFin(Nodo<T>* fin){
+inline void ListaDoble<T>::setFin(Nodo<T>* fin) {
 	this->fin = fin;
 }
 
 template<class T>
-inline void ListaDoble<T>::agregarAlInicio(T* dato){
+inline void ListaDoble<T>::agregarAlInicio(T* dato) {
 	Nodo<T>* tmp = inicio->getNext();
 	Nodo<T>* nuevo = new Nodo<T>;
 	nuevo->setDato(dato);
@@ -94,7 +98,7 @@ inline void ListaDoble<T>::agregarAlInicio(T* dato){
 }
 
 template<class T>
-inline void ListaDoble<T>::agregarAlFinal(T* dato){
+inline void ListaDoble<T>::agregarAlFinal(T* dato) {
 	Nodo<T>* tmp = fin->getPrev();
 	Nodo<T>* nuevo = new Nodo(dato);
 	nuevo->setNext(nullptr);
@@ -109,7 +113,7 @@ inline void ListaDoble<T>::agregarAlFinal(T* dato){
 }
 
 template<class T>
-inline std::string ListaDoble<T>::toString(){
+inline std::string ListaDoble<T>::toString() {
 	std::stringstream ss;
 	Nodo<T>* temporal = inicio;
 	if (temporal->getNext() == nullptr) {
@@ -119,7 +123,7 @@ inline std::string ListaDoble<T>::toString(){
 		temporal = temporal->getNext();
 		ss << "NULLPTR  <-> ";
 		while (temporal != nullptr) {
-			ss << temporal->getDato();
+			ss << *(temporal->getDato());
 			ss << " <-> ";
 			temporal = temporal->getNext();
 		}
@@ -130,7 +134,7 @@ inline std::string ListaDoble<T>::toString(){
 }
 
 template<class T>
-inline IteradorListaDoble<T>* ListaDoble<T>::crearInterador() const{
+inline IteradorListaDoble<T>* ListaDoble<T>::crearInterador() const {
 	return new IteradorListaDoble<T>(this);
 }
 
@@ -150,42 +154,107 @@ inline void ListaDoble<T>::insertar(T* value)
 	}
 
 	cuentaNodos++;
-	heapify(nuevo, (cuentaNodos-1)/2);
+	heapify(nuevo, (cuentaNodos - 1) / 2);
 }
 
 template<class T>
 inline void ListaDoble<T>::heapify(Nodo<T>* actual, int index)
 {
-	Nodo<T>* padreNodo = inicio->getNext();
-	int counter = 0;
-	while (counter != index)
+	if (actual->prev)
 	{
-		padreNodo = padreNodo->getNext();
-		counter++;
-	}
+		Nodo<T>* padreNodo = inicio->getNext();
+		int counter = 0;
+		while (counter <= index)
+		{
+			padreNodo = padreNodo->getNext();
+			counter++;
+		}
 
-	std::cout <<"heappy: " << *(padreNodo->getDato()) << std::endl;
-	//eventualmente se llega al padre
-	if (actual != inicio->getNext() && *(padreNodo->getDato()) < *(actual->getDato()))
-	{
-		swap(actual, padreNodo);
-		heapify(padreNodo, (index - 1) / 2);
+		std::cout << "heappy: " << toString() << std::endl;
+		std::cout << "heappy: " << toString() << std::endl;
+		//eventualmente se llega al padre
+		if (*(padreNodo->getDato()) > *(actual->getDato()))
+		{
+			std::cout << "padre dato: " << *(padreNodo->getDato()) << std::endl;
+			std::cout << "actual dato: " << *(actual->getDato()) << std::endl;
+
+			swap(actual, padreNodo);
+			heapify(padreNodo, (index - 1) / 2);
+		}
 	}
 }
 
 template<class T>
-inline void ListaDoble<T>::swap(Nodo<T>* actual, Nodo<T>* padre)
-{
-	auto auxAnterior = actual->prev;
-	auto auxSig = actual->prev;
+void ListaDoble<T>::swap(Nodo<T>* primeroPtr, Nodo<T>* segundoPtr) {
+	T* aux = primeroPtr->dato;
+	primeroPtr->dato = segundoPtr->getDato();
+	segundoPtr->dato = aux;
+}
 
-	actual->setNext(padre->next);
-	actual->setPrev(padre->prev);
 
-	padre->setNext(auxSig);
-	padre->setPrev(auxAnterior);
+
+//template<class T>
+//inline void ListaDoble<T>::swap(Nodo<T>* A, Nodo<T>* B) {
+//	Nodo<T>* swapperVector[4];
+//	Nodo<T>*  temp;
+//
+//	if (A == B) return;
+//
+//	if (B->next == A) {
+//		temp = A;
+//		A = B;
+//		B = temp;
+//	}
+//
+//	swapperVector[0] = A->prev;
+//	swapperVector[1] = B->prev;
+//	swapperVector[2] = A->next;
+//	swapperVector[3] = B->next;
+//
+//	if (areTheyNeighbours(A, B)) {
+//		A->prev = swapperVector[2];
+//		B->prev = swapperVector[0];
+//		A->next = swapperVector[3];
+//		B->next = swapperVector[1];
+//	}
+//	else {
+//		A->prev = swapperVector[1];
+//		B->prev = swapperVector[0];
+//		A->next = swapperVector[3];
+//		B->next = swapperVector[2];
+//	}
+//
+//	refreshOuterPointers(A);
+//	refreshOuterPointers(B);
+//}
+
+//template<class T>
+//inline void ListaDoble<T>::swap(Nodo<T>* actual, Nodo<T>* padre)
+//{
+//	auto auxAnterior = actual->prev;
+//	auto auxSig = actual->next;
+//
+//	actual->setNext(padre->next);
+//	actual->setPrev(padre->prev);
+//
+//	padre->setNext(auxSig);
+//	padre->setPrev(auxAnterior);
+//}
+template<class T>
+int ListaDoble<T>::areTheyNeighbours(Nodo<T>* A, Nodo<T>* B) {
+	return (A->next == B && B->prev == A) || (A->prev == B && B->next == A);
+}
+
+template<class T>
+void ListaDoble<T>::refreshOuterPointers(Nodo<T>* A) {
+	if (A->prev != NULL)
+		A->prev->next = A;
+
+	if (A->next != NULL)
+		A->next->prev = A;
 }
 
 
 
 #endif 
+
