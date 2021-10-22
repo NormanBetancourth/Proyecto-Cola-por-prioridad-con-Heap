@@ -28,7 +28,8 @@ public:
 	std::string toString();
 	IteradorListaDoble<T>* crearInterador()const;
 	void insertar(T*);
-	void heapify(Nodo<T>*, int);
+	void heapifyUp(Nodo<T>*, int);
+	void heapifyDown(Nodo<T>*, int);
 	void swap(Nodo<T>*, Nodo<T>*);
 	void refreshOuterPointers(Nodo<T>* A);
 	int areTheyNeighbours(Nodo<T>* A, Nodo<T>* B);
@@ -154,11 +155,11 @@ inline void ListaDoble<T>::insertar(T* value)
 	}
 
 	cuentaNodos++;
-	heapify(nuevo, (cuentaNodos - 1) / 2);
+	heapifyUp(nuevo, (cuentaNodos - 1) / 2);
 }
 
 template<class T>
-inline void ListaDoble<T>::heapify(Nodo<T>* actual, int index)
+inline void ListaDoble<T>::heapifyUp(Nodo<T>* actual, int index)
 {
 
 	
@@ -181,7 +182,7 @@ inline void ListaDoble<T>::heapify(Nodo<T>* actual, int index)
 			std::cout << "actual dato: " << *(actual->getDato()) << std::endl;
 
 			swap(actual, padreNodo);
-			heapify(padreNodo, (index - 1) / 2);
+			heapifyUp(padreNodo, (index - 1) / 2);
 
 			
 		}
@@ -200,6 +201,12 @@ inline void ListaDoble<T>::heapify(Nodo<T>* actual, int index)
 		}
 	}
 	
+}
+
+template<class T>
+inline void ListaDoble<T>::heapifyDown(Nodo<T>*, int)
+{
+
 }
 
 template<class T>
