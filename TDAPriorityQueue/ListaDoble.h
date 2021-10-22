@@ -160,11 +160,13 @@ inline void ListaDoble<T>::insertar(T* value)
 template<class T>
 inline void ListaDoble<T>::heapify(Nodo<T>* actual, int index)
 {
+
+	
 	if (actual->prev)
 	{
 		Nodo<T>* padreNodo = inicio->getNext();
 		int counter = 0;
-		while (counter <= index)
+		while (counter < index)
 		{
 			padreNodo = padreNodo->getNext();
 			counter++;
@@ -180,8 +182,24 @@ inline void ListaDoble<T>::heapify(Nodo<T>* actual, int index)
 
 			swap(actual, padreNodo);
 			heapify(padreNodo, (index - 1) / 2);
+
+			
 		}
 	}
+	else
+	{
+		if (actual == inicio && cuentaNodos > 0)
+		{
+			Nodo<T>* temporal = inicio->next->next;
+			T* valor = inicio->dato;
+			delete inicio->next;
+			inicio->next = temporal;
+			temporal->prev = inicio;
+			insertar(valor);
+
+		}
+	}
+	
 }
 
 template<class T>
