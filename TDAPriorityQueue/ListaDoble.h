@@ -187,8 +187,8 @@ inline T* ListaDoble<T>::eliminar()
 		Nodo<T>* eliminar = fin->getPrev();
 		delete eliminar;
 		if (fin->getPrev() == inicio->getNext()) { // --> ambos apuntan a un mismo espacio basura
-			std::cout << "si fin";
-			inicio = new Nodo<T>; 
+			//se inicializa la lista nuevamente
+			inicio = new Nodo<T>;  
 			fin = new Nodo<T>;
 			return value;
 		}
@@ -304,8 +304,6 @@ inline void ListaDoble<T>::heapifyDown(Nodo<T>* actual, int index)
 			}
 		}
 	}
-
-
 
 
 }
