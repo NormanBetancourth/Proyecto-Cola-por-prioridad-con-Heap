@@ -33,6 +33,9 @@ int main() {
         std::cout << *itEnt->currentItem()->getDato() << "\n";
     }
 
+    
+
+    //std::cout<<listaEnteros->toString();
  
   
 

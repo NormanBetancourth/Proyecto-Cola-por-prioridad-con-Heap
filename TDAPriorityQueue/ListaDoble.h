@@ -56,6 +56,7 @@ template<class T>
 inline ListaDoble<T>::ListaDoble() {
 	inicio = new Nodo<T>;
 	fin = new Nodo<T>;
+	cuentaNodos = 0;
 }
 
 template<class T>
