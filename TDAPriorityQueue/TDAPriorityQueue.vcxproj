@@ -139,11 +139,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ColaPrioridad.h" />
     <ClInclude Include="IteradorListaDoble.h" />
     <ClInclude Include="ListaDoble.h" />
     <ClInclude Include="Nodo.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ColaPrioridad.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

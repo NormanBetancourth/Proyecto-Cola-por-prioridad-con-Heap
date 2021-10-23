@@ -4,6 +4,7 @@
 #include"Nodo.h"
 #include<string>
 #include<sstream>
+#include<iostream>
 
 
 
@@ -19,8 +20,10 @@ private:
 	Nodo<T>* buscarHijo(int);
 	int ban;
 public:
-
+	int getCuentaNodos();
 	ListaDoble(bool isMax = true);
+	ListaDoble(const ListaDoble<T>& li);
+	bool getOrden();
 	~ListaDoble();
 	Nodo<T>* getInicio()const;
 	Nodo<T>* getFin()const;
@@ -57,6 +60,14 @@ inline Nodo<T>* ListaDoble<T>::buscarHijo(int index)
 }
 
 template<class T>
+inline int ListaDoble<T>::getCuentaNodos()
+{
+	return cuentaNodos;
+}
+
+
+
+template<class T>
 inline ListaDoble<T>::ListaDoble(bool isMax) {
 	ban = isMax;
 	inicio = new Nodo<T>;
@@ -65,13 +76,39 @@ inline ListaDoble<T>::ListaDoble(bool isMax) {
 }
 
 template<class T>
+inline ListaDoble<T>::ListaDoble(const ListaDoble<T>& li)
+{
+	
+	std::cout << "matenme";
+	auto aux =  li.getPrimero();
+	ban = li.ban;
+	cuentaNodos = 0;
+	inicio = new Nodo<T>;
+	fin = new Nodo<T>;
+
+	while (aux&&aux!= li.getFin())
+	{
+		insertar(new T(*(aux->dato)));
+		aux = aux->next;
+	}
+
+}
+
+template<class T>
+inline bool ListaDoble<T>::getOrden()
+{
+	return ban;
+}
+
+template<class T>
 inline ListaDoble<T>::~ListaDoble() {
 	Nodo<T>* temporal = inicio->getNext();
-	while (temporal != nullptr) {
+	while (temporal != nullptr && temporal->getNext()) {
 		inicio->setNext(temporal->getNext());
 		delete temporal;
 		temporal = inicio->getNext();
 	}
+	
 }
 
 template<class T>
@@ -186,12 +223,10 @@ inline T* ListaDoble<T>::eliminar()
 	T* value = nullptr;
 		value = inicio->getNext()->getDato();
 		swap(inicio->getNext(), fin->getPrev());
-		//problema
 		Nodo<T>* anterior = getFin()->getPrev()->getPrev();
 		Nodo<T>* eliminar = fin->getPrev();
 		delete eliminar;
-		if (fin->getPrev() == inicio->getNext()) { // --> ambos apuntan a un mismo espacio basura
-			//se inicializa la lista nuevamente
+		if (fin->getPrev() == inicio->getNext()) { 
 			inicio = new Nodo<T>;  
 			fin = new Nodo<T>;
 			return value;

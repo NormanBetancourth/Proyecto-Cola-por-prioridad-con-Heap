@@ -9,39 +9,50 @@
 
 
 int main() {
-    ListaDoble<int>* listaEnteros = new ListaDoble<int>();
+    ListaDoble<int> listaEnteros(true);
 
-    listaEnteros->insertar(new int(1));
+    listaEnteros.insertar(new int(1));
    
-    listaEnteros->insertar(new int(3));
-    listaEnteros->insertar(new int(6));
+    listaEnteros.insertar(new int(3));
+    listaEnteros.insertar(new int(6));
     
-    listaEnteros->insertar(new int(5));
-    listaEnteros->insertar(new int(9));
-    listaEnteros->insertar(new int(8));
+    listaEnteros.insertar(new int(5));
+    listaEnteros.insertar(new int(9));
+    listaEnteros.insertar(new int(8));
 
   
 
-   int* valor = listaEnteros->eliminar();
+   /* int* valor = listaEnteros->eliminar();
     std::cout << "Valor: " << *valor << std::endl;
     int* valor2 = listaEnteros->eliminar();
-    std::cout << "Valor: " << *valor2 << std::endl;
+    std::cout << "Valor: " << *valor2 << std::endl;*/
     
     
 
-   /* IteradorListaDoble<int>* itEnt = listaEnteros->crearInterador();
-    for (itEnt->begin(); !itEnt->isEnd(); itEnt->next()) {
-        std::cout << *itEnt->currentItem()->getDato() << "\n";
-    }*/
+   
 
 
     
 
-    std::cout<<listaEnteros->toString();
+    //std::cout<<listaEnteros->toString();
  
+    ListaDoble<int> listacopia(listaEnteros);
+    
+    
+
+    std::cout << listacopia.toString();
+
+
   
 
 
-    delete listaEnteros;
+    
 	return 0;
 }
+
+
+
+
+
+
+
