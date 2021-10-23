@@ -7,7 +7,7 @@
 
 template<class T>
 class IteradorListaDoble;
-
+//Heap
 template<class T>
 class ListaDoble {
 private:
