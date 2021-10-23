@@ -79,7 +79,7 @@ template<class T>
 inline ListaDoble<T>::ListaDoble(const ListaDoble<T>& li)
 {
 	
-	std::cout << "matenme";
+	
 	auto aux =  li.getPrimero();
 	ban = li.ban;
 	cuentaNodos = 0;

@@ -9,16 +9,16 @@
 
 
 int main() {
-    ListaDoble<int> listaEnteros(true);
+    ListaDoble<int>* listaEnteros = new ListaDoble<int>(true);
 
-    listaEnteros.insertar(new int(1));
+    listaEnteros->insertar(new int(1));
    
-    listaEnteros.insertar(new int(3));
-    listaEnteros.insertar(new int(6));
+    listaEnteros->insertar(new int(3));
+    listaEnteros->insertar(new int(6));
     
-    listaEnteros.insertar(new int(5));
-    listaEnteros.insertar(new int(9));
-    listaEnteros.insertar(new int(8));
+    listaEnteros->insertar(new int(5));
+    listaEnteros->insertar(new int(9));
+    listaEnteros->insertar(new int(8));
 
   
 
@@ -36,11 +36,11 @@ int main() {
 
     //std::cout<<listaEnteros->toString();
  
-    ListaDoble<int> listacopia(listaEnteros);
+    ListaDoble<int>* listacopia = new ListaDoble<int>(*listaEnteros);
     
     
 
-    std::cout << listacopia.toString();
+    std::cout << listacopia->toString();
 
 
   
