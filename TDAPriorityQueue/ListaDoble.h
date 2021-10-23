@@ -1,6 +1,5 @@
 #ifndef TDAPRIORITYQUEUE_LISTADOBLE_H
 #define TDAPRIORITYQUEUE_LISTADOBLE_H
-///
 #include"Nodo.h"
 #include<string>
 #include<sstream>
@@ -221,14 +220,16 @@ inline void ListaDoble<T>::insertar(T* value)
 template<class T>
 inline T* ListaDoble<T>::eliminar()
 {
-	T* value = nullptr;
+	if (getPrimero() )
+	{
+		T* value = nullptr;
 		value = inicio->getNext()->getDato();
 		swap(inicio->getNext(), fin->getPrev());
 		Nodo<T>* anterior = getFin()->getPrev()->getPrev();
 		Nodo<T>* eliminar = fin->getPrev();
 		delete eliminar;
-		if (fin->getPrev() == inicio->getNext()) { 
-			inicio = new Nodo<T>;  
+		if (fin->getPrev() == inicio->getNext()) {
+			inicio = new Nodo<T>;
 			fin = new Nodo<T>;
 			return value;
 		}
@@ -241,7 +242,9 @@ inline T* ListaDoble<T>::eliminar()
 			heapifyDown(inicio->getNext(), 0);
 		}
 
-	return value;
+		return value;
+	}
+	return nullptr;
 }
 
 template<class T>

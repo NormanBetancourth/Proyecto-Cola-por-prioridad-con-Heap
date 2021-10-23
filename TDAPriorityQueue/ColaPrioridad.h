@@ -72,7 +72,20 @@ inline T* ColaPrioridad<T>::pop()
 template<class T>
 inline T* ColaPrioridad<T>::front() const
 {
-	return heap->getPrimero();
+	if (heap->getCuentaNodos() > 0)
+	{
+		return nullptr;
+	}
+	else
+	{
+		if (heap->getPrimero() != heap->getInicio())
+		{
+			return heap->getPrimero()->dato;
+		}
+		else {
+			return nullptr;
+		}
+	}
 }
 
 template<class T>
