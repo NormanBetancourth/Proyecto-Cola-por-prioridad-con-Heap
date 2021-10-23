@@ -22,6 +22,7 @@ private:
 public:
 	int getCuentaNodos();
 	ListaDoble(bool isMax = true);
+	
 	ListaDoble(const ListaDoble<T>& li);
 	bool getOrden();
 	~ListaDoble();
@@ -450,55 +451,6 @@ void ListaDoble<T>::swap(Nodo<T>* primeroPtr, Nodo<T>* segundoPtr) {
 	segundoPtr->setDato(aux);
 }
 
-
-
-//template<class T>
-//inline void ListaDoble<T>::swap(Nodo<T>* A, Nodo<T>* B) {
-//	Nodo<T>* swapperVector[4];
-//	Nodo<T>*  temp;
-//
-//	if (A == B) return;
-//
-//	if (B->next == A) {
-//		temp = A;
-//		A = B;
-//		B = temp;
-//	}
-//
-//	swapperVector[0] = A->prev;
-//	swapperVector[1] = B->prev;
-//	swapperVector[2] = A->next;
-//	swapperVector[3] = B->next;
-//
-//	if (areTheyNeighbours(A, B)) {
-//		A->prev = swapperVector[2];
-//		B->prev = swapperVector[0];
-//		A->next = swapperVector[3];
-//		B->next = swapperVector[1];
-//	}
-//	else {
-//		A->prev = swapperVector[1];
-//		B->prev = swapperVector[0];
-//		A->next = swapperVector[3];
-//		B->next = swapperVector[2];
-//	}
-//
-//	refreshOuterPointers(A);
-//	refreshOuterPointers(B);
-//}
-
-//template<class T>
-//inline void ListaDoble<T>::swap(Nodo<T>* actual, Nodo<T>* padre)
-//{
-//	auto auxAnterior = actual->prev;
-//	auto auxSig = actual->next;
-//
-//	actual->setNext(padre->next);
-//	actual->setPrev(padre->prev);
-//
-//	padre->setNext(auxSig);
-//	padre->setPrev(auxAnterior);
-//}
 template<class T>
 int ListaDoble<T>::areTheyNeighbours(Nodo<T>* A, Nodo<T>* B) {
 	return (A->next == B && B->prev == A) || (A->prev == B && B->next == A);

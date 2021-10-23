@@ -26,7 +26,12 @@ template<class T>
 inline Nodo<T>::Nodo(T* dato) : dato(dato), next(nullptr), prev(nullptr) {}
 
 template<class T>
-inline Nodo<T>::~Nodo() {}
+inline Nodo<T>::~Nodo() {
+	if (dato)
+	{
+		delete dato;
+	}
+}
 
 template<class T>
 inline T* Nodo<T>::getDato() const {
