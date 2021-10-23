@@ -22,7 +22,7 @@ public:
 	Nodo<T>* getFin()const;
 	Nodo<T>* getPrimero()const;
 	void setInicio(Nodo<T>*);
-	Nodo<T>* getUltimo();
+	Nodo<T>* getUltimo() const;
 	void setFin(Nodo<T>*);
 	void agregarAlInicio(T*);
 	void agregarAlFinal(T*);
@@ -76,7 +76,7 @@ inline Nodo<T>* ListaDoble<T>::getInicio() const {
 
 template<class T>
 inline Nodo<T>* ListaDoble<T>::getFin() const {
-	return fin;
+	return fin;//
 }
 
 template<class T>
@@ -90,7 +90,7 @@ inline void ListaDoble<T>::setInicio(Nodo<T>* inicio) {
 }
 
 template<class T>
-inline Nodo<T>* ListaDoble<T>::getUltimo() {
+inline Nodo<T>* ListaDoble<T>::getUltimo() const{
 	return fin->getPrev();
 }
 
@@ -140,8 +140,8 @@ inline std::string ListaDoble<T>::toString() {
 	else {
 		temporal = temporal->getNext();
 		ss << "NULLPTR  <-> ";
-		while (temporal != nullptr) {
-			ss << *(temporal->getDato());
+		while (temporal != nullptr && temporal!=fin) {
+			ss << *(temporal->dato);
 			ss << " <-> ";
 			temporal = temporal->getNext();
 		}
@@ -180,7 +180,6 @@ inline T* ListaDoble<T>::eliminar()
 {
 	T* value = nullptr;
 		value = inicio->getNext()->getDato();
-		std::cout << "-elemento a eliminar y retornar: " << value << "\n";
 		swap(inicio->getNext(), fin->getPrev());
 		//problema
 		Nodo<T>* anterior = getFin()->getPrev()->getPrev();

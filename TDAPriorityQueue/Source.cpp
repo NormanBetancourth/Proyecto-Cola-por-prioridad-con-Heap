@@ -22,20 +22,21 @@ int main() {
 
   
 
-    int* valor = listaEnteros->eliminar();
+   int* valor = listaEnteros->eliminar();
     std::cout << "Valor: " << *valor << std::endl;
     int* valor2 = listaEnteros->eliminar();
     std::cout << "Valor: " << *valor2 << std::endl;
     
+    
 
-    IteradorListaDoble<int>* itEnt = listaEnteros->crearInterador();
+   /* IteradorListaDoble<int>* itEnt = listaEnteros->crearInterador();
     for (itEnt->begin(); !itEnt->isEnd(); itEnt->next()) {
         std::cout << *itEnt->currentItem()->getDato() << "\n";
-    }
+    }*/
 
     
 
-    //std::cout<<listaEnteros->toString();
+    std::cout<<listaEnteros->toString();
  
   
 

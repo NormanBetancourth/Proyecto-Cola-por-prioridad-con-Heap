@@ -76,7 +76,7 @@ inline void IteradorListaDoble<T>::end(){
 
 template<class T>
 inline bool IteradorListaDoble<T>::isEnd() const{
-	return index == listaDoble->getFin();
+	return index == listaDoble->getUltimo();
 }
 
 template<class T>
