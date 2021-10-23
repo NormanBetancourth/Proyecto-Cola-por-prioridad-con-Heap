@@ -25,18 +25,8 @@ int main() {
     ListaDoble<int>* listacopia = new ListaDoble<int>(*listaEnteros);
     delete listaEnteros;
 
-    ColaPrioridad<int>* cola = new ColaPrioridad<int>();
-
-    
-    int* aa = cola->pop();
-     if (aa!= nullptr)
-     {
-         std::cout << "\n " <<*aa<< std::endl;
-     }
-
-    
-     //ColaPrioridad<int>* nuevaCola = new ColaPrioridad<int>(false, listacopia);
-     ColaPrioridad<int>* nuevaCola = new ColaPrioridad<int>(*cola);
+    ColaPrioridad<int>* cola = new ColaPrioridad<int>(listacopia, true);
+     ColaPrioridad<int>* nuevaCola = new ColaPrioridad<int>(cola);
 
 
      

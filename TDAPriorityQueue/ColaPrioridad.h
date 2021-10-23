@@ -10,8 +10,8 @@ public:
 	typedef Nodo<T>* valor;
 	typedef ListaDoble<T>* Heap;
 	
-	ColaPrioridad(bool isMax =true, Heap li = nullptr);
-	ColaPrioridad(const ColaPrioridad<T>& colaCopiable);
+	ColaPrioridad( Heap li = nullptr, bool isMax = true );
+	ColaPrioridad( ColaPrioridad<T>*& colaCopiable);
 	~ColaPrioridad();
 	Heap getHeap();
 
@@ -24,7 +24,7 @@ public:
 };
 
 template<class T>
-inline ColaPrioridad<T>::ColaPrioridad(bool isMax, Heap li)
+inline ColaPrioridad<T>::ColaPrioridad( Heap li, bool isMax )
 {
 	this->heap = li;
 	if (!heap)
@@ -34,12 +34,12 @@ inline ColaPrioridad<T>::ColaPrioridad(bool isMax, Heap li)
 }
 
 template<class T>
-inline ColaPrioridad<T>::ColaPrioridad(const ColaPrioridad<T>& colaCopiable)
+inline ColaPrioridad<T>::ColaPrioridad(ColaPrioridad<T>*& colaCopiable)
 {
-	
-	ListaDoble<T> ldd = colaCopiable.getHeap();
-	this->heap = new ListaDoble<T>(ldd);
+	this->heap = new ListaDoble<T>(*(colaCopiable->getHeap()));
 }
+
+
 
 template<class T>
 inline ColaPrioridad<T>::~ColaPrioridad()
