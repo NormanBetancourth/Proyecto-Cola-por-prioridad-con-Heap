@@ -9,7 +9,7 @@
 
 
 int main() {
-    ListaDoble<int>* listaEnteros = new ListaDoble<int>;
+    ListaDoble<int>* listaEnteros = new ListaDoble<int>();
 
     listaEnteros->insertar(new int(1));
    
@@ -33,6 +33,7 @@ int main() {
     for (itEnt->begin(); !itEnt->isEnd(); itEnt->next()) {
         std::cout << *itEnt->currentItem()->getDato() << "\n";
     }*/
+
 
     
 

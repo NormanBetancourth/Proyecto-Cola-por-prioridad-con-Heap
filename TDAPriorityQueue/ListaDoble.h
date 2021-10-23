@@ -5,6 +5,8 @@
 #include<string>
 #include<sstream>
 
+
+
 template<class T>
 class IteradorListaDoble;
 //Heap
@@ -15,8 +17,10 @@ private:
 	Nodo<T>* fin;
 	int cuentaNodos;
 	Nodo<T>* buscarHijo(int);
+	int ban;
 public:
-	ListaDoble();
+
+	ListaDoble(bool isMax = true);
 	~ListaDoble();
 	Nodo<T>* getInicio()const;
 	Nodo<T>* getFin()const;
@@ -53,7 +57,8 @@ inline Nodo<T>* ListaDoble<T>::buscarHijo(int index)
 }
 
 template<class T>
-inline ListaDoble<T>::ListaDoble() {
+inline ListaDoble<T>::ListaDoble(bool isMax) {
+	ban = isMax;
 	inicio = new Nodo<T>;
 	fin = new Nodo<T>;
 	cuentaNodos = 0;
@@ -207,42 +212,83 @@ template<class T>
 inline void ListaDoble<T>::heapifyUp(Nodo<T>* actual, int index)
 {
 
-
-	if (actual->getPrev())
+	if (!ban)
 	{
-		Nodo<T>* padreNodo = inicio->getNext();
-		int counter = 0;
-		while (counter < index)
+		if (actual->getPrev())
 		{
-			padreNodo = padreNodo->getNext();
-			counter++;
+			Nodo<T>* padreNodo = inicio->getNext();
+			int counter = 0;
+			while (counter < index)
+			{
+				padreNodo = padreNodo->getNext();
+				counter++;
+			}
+
+
+			//eventualmente se llega al padre
+			if (*(padreNodo->getDato()) > *(actual->getDato()))
+			{
+
+
+				swap(actual, padreNodo);
+				heapifyUp(padreNodo, (index - 1) / 2);
+
+
+			}
 		}
-
-
-		//eventualmente se llega al padre
-		if (*(padreNodo->getDato()) > * (actual->getDato()))
+		else
 		{
+			if (actual == inicio && cuentaNodos > 0)
+			{
+				Nodo<T>* temporal = inicio->getNext()->getNext();
+				T* valor = inicio->getDato();
+				delete inicio->getNext();
+				inicio->setNext(temporal);
+				temporal->setPrev(inicio);
+				insertar(valor);
 
-
-			swap(actual, padreNodo);
-			heapifyUp(padreNodo, (index - 1) / 2);
-
-
+			}
 		}
 	}
 	else
 	{
-		if (actual == inicio && cuentaNodos > 0)
+		if (actual->getPrev())
 		{
-			Nodo<T>* temporal = inicio->getNext()->getNext();
-			T* valor = inicio->getDato();
-			delete inicio->getNext();
-			inicio->setNext(temporal);
-			temporal->setPrev(inicio);
-			insertar(valor);
+			Nodo<T>* padreNodo = inicio->getNext();
+			int counter = 0;
+			while (counter < index)
+			{
+				padreNodo = padreNodo->getNext();
+				counter++;
+			}
 
+
+			//eventualmente se llega al padre
+			if (*(padreNodo->getDato()) < *(actual->getDato()))
+			{
+
+
+				swap(actual, padreNodo);
+				heapifyUp(padreNodo, (index - 1) / 2);
+
+
+			}
+		}
+		else
+		{
+			if (actual == inicio && cuentaNodos > 0)
+			{
+				Nodo<T>* temporal = inicio->getNext()->getNext();
+				T* valor = inicio->getDato();
+				delete inicio->getNext();
+				inicio->setNext(temporal);
+				temporal->setPrev(inicio);
+				insertar(valor);
+
+			}
 		}
 	}
+	
 
 }
 
@@ -252,57 +298,112 @@ inline void ListaDoble<T>::heapifyDown(Nodo<T>* actual, int index)
 	auto izquierdo = buscarHijo((2 * index) + 1);
 	auto derecho = buscarHijo((2 * index) + 2);
 
-
-
-	if (derecho == nullptr && izquierdo == nullptr)
+	if (!ban)
 	{
-		return;
-	}
-	else
-	{
-		if (izquierdo && derecho == nullptr)
+		if (derecho == nullptr && izquierdo == nullptr)
 		{
-			if (*(actual->getDato()) > * (izquierdo->getDato()))
-			{
-				swap(izquierdo, actual);
-				heapifyDown(izquierdo, (2 * index) + 1);
-			}
-			else
-			{
-				if (izquierdo == nullptr && derecho)
-				{
-					if (*(actual->getDato()) > * (derecho->getDato()))
-					{
-						swap(actual, derecho);
-						heapifyDown(derecho, (2 * index) + 2);
-					}
-				}
-			}
-
-		}
-	}
-
-	if (izquierdo && derecho)
-	{
-		if (*(derecho->getDato()) > * (izquierdo->getDato()))
-		{
-			//std::cout << *(izquierdo->getDato()) << "<- " << *(actual->getDato()) << " ->" << *(derecho->getDato()) << std::endl;
-			if (*(actual->getDato()) > * (izquierdo->getDato()))
-			{
-				swap(izquierdo, actual);
-				heapifyDown(izquierdo, (2 * index) + 1);
-			}
-
+			return;
 		}
 		else
 		{
-			if (*(actual->getDato()) > * (derecho->getDato()))
+			if (izquierdo && derecho == nullptr)
 			{
-				swap(actual, derecho);
-				heapifyDown(derecho, (2 * index) + 2);
+				if (*(actual->getDato()) > *(izquierdo->getDato()))
+				{
+					swap(izquierdo, actual);
+					heapifyDown(izquierdo, (2 * index) + 1);
+				}
+				else
+				{
+					if (izquierdo == nullptr && derecho)
+					{
+						if (*(actual->getDato()) > *(derecho->getDato()))
+						{
+							swap(actual, derecho);
+							heapifyDown(derecho, (2 * index) + 2);
+						}
+					}
+				}
+
+			}
+		}
+
+		if (izquierdo && derecho)
+		{
+			if (*(derecho->getDato()) > *(izquierdo->getDato()))
+			{
+				//std::cout << *(izquierdo->getDato()) << "<- " << *(actual->getDato()) << " ->" << *(derecho->getDato()) << std::endl;
+				if (*(actual->getDato()) > *(izquierdo->getDato()))
+				{
+					swap(izquierdo, actual);
+					heapifyDown(izquierdo, (2 * index) + 1);
+				}
+
+			}
+			else
+			{
+				if (*(actual->getDato()) > *(derecho->getDato()))
+				{
+					swap(actual, derecho);
+					heapifyDown(derecho, (2 * index) + 2);
+				}
 			}
 		}
 	}
+	else 
+	{
+		if (derecho == nullptr && izquierdo == nullptr)
+		{
+			return;
+		}
+		else
+		{
+			if (izquierdo && derecho == nullptr)
+			{
+				if (*(actual->getDato()) < *(izquierdo->getDato()))
+				{
+					swap(izquierdo, actual);
+					heapifyDown(izquierdo, (2 * index) + 1);
+				}
+				else
+				{
+					if (izquierdo == nullptr && derecho)
+					{
+						if (*(actual->getDato()) < *(derecho->getDato()))
+						{
+							swap(actual, derecho);
+							heapifyDown(derecho, (2 * index) + 2);
+						}
+					}
+				}
+
+			}
+		}
+
+		if (izquierdo && derecho)
+		{
+			if (*(derecho->getDato()) < *(izquierdo->getDato()))
+			{
+				//std::cout << *(izquierdo->getDato()) << "<- " << *(actual->getDato()) << " ->" << *(derecho->getDato()) << std::endl;
+				if (*(actual->getDato()) < *(izquierdo->getDato()))
+				{
+					swap(izquierdo, actual);
+					heapifyDown(izquierdo, (2 * index) + 1);
+				}
+
+			}
+			else
+			{
+				if (*(actual->getDato()) < *(derecho->getDato()))
+				{
+					swap(actual, derecho);
+					heapifyDown(derecho, (2 * index) + 2);
+				}
+			}
+		}
+	}
+
+	
 
 
 }
