@@ -1,6 +1,6 @@
 #ifndef TDAPRIORITYQUEUE_LISTADOBLE_H
 #define TDAPRIORITYQUEUE_LISTADOBLE_H
-
+///
 #include"Nodo.h"
 #include<string>
 #include<sstream>
@@ -41,12 +41,12 @@ public:
 template<class T>
 inline Nodo<T>* ListaDoble<T>::buscarHijo(int index)
 {
-	Nodo<T>* Hijo = inicio->next;
+	Nodo<T>* Hijo = inicio->getNext();
 	int counter = 0;
-	while (counter < index && Hijo->next!= fin)
+	while (counter < index && Hijo->getNext() != fin)
 	{
-		Hijo = Hijo->next;
-		
+		Hijo = Hijo->getNext();
+
 		counter++;
 	}
 	return Hijo;
@@ -179,23 +179,27 @@ template<class T>
 inline T* ListaDoble<T>::eliminar()
 {
 	T* value = nullptr;
-	
-	if (cuentaNodos>0)
-	{
-		value = inicio->next->dato;
-
-		swap(inicio->next, fin->prev);
-
+		value = inicio->getNext()->getDato();
+		std::cout << "-elemento a eliminar y retornar: " << value << "\n";
+		swap(inicio->getNext(), fin->getPrev());
 		//problema
-		auto anterior = fin->prev->prev;
-		auto eliminar = fin->prev;
+		Nodo<T>* anterior = getFin()->getPrev()->getPrev();
+		Nodo<T>* eliminar = fin->getPrev();
 		delete eliminar;
-		anterior->next = fin;
-		fin->setPrev(anterior);
+		if (fin->getPrev() == inicio->getNext()) { // --> ambos apuntan a un mismo espacio basura
+			//se inicializa la lista nuevamente
+			inicio = new Nodo<T>;  
+			fin = new Nodo<T>;
+			return value;
+		}
+		else {
+			anterior->setNext(fin);
 
-		cuentaNodos--;
-		heapifyDown(inicio->next, 0);
-	}
+			fin->setPrev(anterior);
+
+			cuentaNodos--;
+			heapifyDown(inicio->getNext(), 0);
+		}
 
 	return value;
 }
@@ -204,8 +208,8 @@ template<class T>
 inline void ListaDoble<T>::heapifyUp(Nodo<T>* actual, int index)
 {
 
-	
-	if (actual->prev)
+
+	if (actual->getPrev())
 	{
 		Nodo<T>* padreNodo = inicio->getNext();
 		int counter = 0;
@@ -215,32 +219,32 @@ inline void ListaDoble<T>::heapifyUp(Nodo<T>* actual, int index)
 			counter++;
 		}
 
-		
+
 		//eventualmente se llega al padre
-		if (*(padreNodo->getDato()) > *(actual->getDato()))
+		if (*(padreNodo->getDato()) > * (actual->getDato()))
 		{
-			
+
 
 			swap(actual, padreNodo);
 			heapifyUp(padreNodo, (index - 1) / 2);
 
-			
+
 		}
 	}
 	else
 	{
 		if (actual == inicio && cuentaNodos > 0)
 		{
-			Nodo<T>* temporal = inicio->next->next;
-			T* valor = inicio->dato;
-			delete inicio->next;
-			inicio->next = temporal;
-			temporal->prev = inicio;
+			Nodo<T>* temporal = inicio->getNext()->getNext();
+			T* valor = inicio->getDato();
+			delete inicio->getNext();
+			inicio->setNext(temporal);
+			temporal->setPrev(inicio);
 			insertar(valor);
 
 		}
 	}
-	
+
 }
 
 template<class T>
@@ -249,17 +253,17 @@ inline void ListaDoble<T>::heapifyDown(Nodo<T>* actual, int index)
 	auto izquierdo = buscarHijo((2 * index) + 1);
 	auto derecho = buscarHijo((2 * index) + 2);
 
-	
+
 
 	if (derecho == nullptr && izquierdo == nullptr)
 	{
 		return;
 	}
-	else 
+	else
 	{
 		if (izquierdo && derecho == nullptr)
 		{
-			if (*(actual->dato) > *(izquierdo->dato))
+			if (*(actual->getDato()) > * (izquierdo->getDato()))
 			{
 				swap(izquierdo, actual);
 				heapifyDown(izquierdo, (2 * index) + 1);
@@ -268,7 +272,7 @@ inline void ListaDoble<T>::heapifyDown(Nodo<T>* actual, int index)
 			{
 				if (izquierdo == nullptr && derecho)
 				{
-					if (*(actual->dato) > *(derecho->dato)) 
+					if (*(actual->getDato()) > * (derecho->getDato()))
 					{
 						swap(actual, derecho);
 						heapifyDown(derecho, (2 * index) + 2);
@@ -281,19 +285,19 @@ inline void ListaDoble<T>::heapifyDown(Nodo<T>* actual, int index)
 
 	if (izquierdo && derecho)
 	{
-		if (*(derecho->dato) > *(izquierdo->dato))
+		if (*(derecho->getDato()) > * (izquierdo->getDato()))
 		{
-			std::cout << *(izquierdo->dato) << "<- " << *(actual->dato) << " ->" << *(derecho->dato) << std::endl;
-			if (*(actual->dato) > *(izquierdo->dato))
+			//std::cout << *(izquierdo->getDato()) << "<- " << *(actual->getDato()) << " ->" << *(derecho->getDato()) << std::endl;
+			if (*(actual->getDato()) > * (izquierdo->getDato()))
 			{
 				swap(izquierdo, actual);
 				heapifyDown(izquierdo, (2 * index) + 1);
 			}
-			
+
 		}
 		else
 		{
-			if (*(actual->dato) > *(derecho->dato))
+			if (*(actual->getDato()) > * (derecho->getDato()))
 			{
 				swap(actual, derecho);
 				heapifyDown(derecho, (2 * index) + 2);
@@ -301,16 +305,14 @@ inline void ListaDoble<T>::heapifyDown(Nodo<T>* actual, int index)
 		}
 	}
 
-	
-
 
 }
 
 template<class T>
 void ListaDoble<T>::swap(Nodo<T>* primeroPtr, Nodo<T>* segundoPtr) {
-	T* aux = primeroPtr->dato;
-	primeroPtr->dato = segundoPtr->getDato();
-	segundoPtr->dato = aux;
+	T* aux = primeroPtr->getDato();
+	primeroPtr->setDato(segundoPtr->getDato());
+	segundoPtr->setDato(aux);
 }
 
 
@@ -379,4 +381,3 @@ void ListaDoble<T>::refreshOuterPointers(Nodo<T>* A) {
 
 
 #endif 
-
