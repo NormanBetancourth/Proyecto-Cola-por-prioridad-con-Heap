@@ -27,7 +27,7 @@ int main() {
 
     ColaPrioridad<int>* cola = new ColaPrioridad<int>();
 
-    cola->add(new int(6666));
+    
     int* aa = cola->pop();
      if (aa!= nullptr)
      {
@@ -35,11 +35,14 @@ int main() {
      }
 
     
-     ColaPrioridad<int>* nuevaCola = new ColaPrioridad<int>(false, listacopia);
+     //ColaPrioridad<int>* nuevaCola = new ColaPrioridad<int>(false, listacopia);
+     ColaPrioridad<int>* nuevaCola = new ColaPrioridad<int>(*cola);
 
 
      
 
+    
+     /*nuevaCola->pop();
      nuevaCola->pop();
      nuevaCola->pop();
      nuevaCola->pop();
@@ -49,10 +52,7 @@ int main() {
      nuevaCola->pop();
      nuevaCola->pop();
      nuevaCola->pop();
-     nuevaCola->pop();
-     nuevaCola->pop();
-     nuevaCola->pop();
-     nuevaCola->pop();
+     nuevaCola->pop();*/
 
      if (nuevaCola->front() != nullptr)
      {

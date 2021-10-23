@@ -36,7 +36,9 @@ inline ColaPrioridad<T>::ColaPrioridad(bool isMax, Heap li)
 template<class T>
 inline ColaPrioridad<T>::ColaPrioridad(const ColaPrioridad<T>& colaCopiable)
 {
-	this->heap = new ListaDoble<T>(*(colaCopiable.getHeap()));
+	
+	ListaDoble<T> ldd = colaCopiable.getHeap();
+	this->heap = new ListaDoble<T>(ldd);
 }
 
 template<class T>
@@ -72,20 +74,11 @@ inline T* ColaPrioridad<T>::pop()
 template<class T>
 inline T* ColaPrioridad<T>::front() const
 {
-	if (heap->getCuentaNodos() > 0)
+	if (heap->getPrimero())
 	{
-		return nullptr;
+		return heap->getPrimero()->dato;
 	}
-	else
-	{
-		if (heap->getPrimero() != heap->getInicio())
-		{
-			return heap->getPrimero()->dato;
-		}
-		else {
-			return nullptr;
-		}
-	}
+	return nullptr;
 }
 
 template<class T>
