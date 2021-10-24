@@ -6,7 +6,7 @@
 
 template<class T>
 class IteradorListaDoble;
-//Heap
+//Class heap --- esta lista doble sera tratada como heap ---
 template<class T>
 class ListaDoble {
 private:
@@ -39,6 +39,9 @@ public:
 	void swap(Nodo<T>*, Nodo<T>*);
 };
 
+
+//Me buscara el hijo de algun nodo y lo retornara para su posterior comparacion en el heapify
+//su busqueda sera por medio del indice del parametro --index--
 template<class T>
 inline Nodo<T>* ListaDoble<T>::buscarHijo(int index)
 {
@@ -192,6 +195,7 @@ inline IteradorListaDoble<T>* ListaDoble<T>::crearInterador() const {
 	return new IteradorListaDoble<T>(this);
 }
 
+//Me inserta el elemento al final de la lista y lo reacomoda realizando heapifyUp despues de la insercion
 template<class T>
 inline void ListaDoble<T>::insertar(T* value)
 {
@@ -211,6 +215,8 @@ inline void ListaDoble<T>::insertar(T* value)
 	heapifyUp(nuevo, (cuentaNodos - 1) / 2);
 }
 
+//realiza swap al primer elemento de la lista con el ultimo y lo elimina
+//realiza heapifyDown de ser necesario para acomodar ahora la nueva raiz
 template<class T>
 inline T* ListaDoble<T>::eliminar()
 {
@@ -241,6 +247,7 @@ inline T* ListaDoble<T>::eliminar()
 	return nullptr;
 }
 
+//Compara el elemento de abajo hacia arriba para su respectiva acomodacion
 template<class T>
 inline void ListaDoble<T>::heapifyUp(Nodo<T>* actual, int index)
 {
@@ -325,6 +332,7 @@ inline void ListaDoble<T>::heapifyUp(Nodo<T>* actual, int index)
 
 }
 
+//Compara el elemento de arriba hacia abajo para su respectiva acomodacion
 template<class T>
 inline void ListaDoble<T>::heapifyDown(Nodo<T>* actual, int index)
 {
@@ -441,6 +449,7 @@ inline void ListaDoble<T>::heapifyDown(Nodo<T>* actual, int index)
 
 }
 
+//intercambio de valores en los nodos
 template<class T>
 void ListaDoble<T>::swap(Nodo<T>* primeroPtr, Nodo<T>* segundoPtr) {
 	T* aux = primeroPtr->getDato();
