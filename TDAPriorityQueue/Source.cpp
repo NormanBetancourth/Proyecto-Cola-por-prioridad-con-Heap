@@ -1,10 +1,10 @@
 /*
 Estructuras de Datos EIF 207- Grupo 3
-Proyecto I. ImplementaciÛn TDA Cola de Prioridad
+Proyecto I. Implementaci√≥n TDA Cola de Prioridad
 Integrantes:
     Norman Betancourtt Mairena
-    HÈctor MÈndez Fern·ndez
-    Rebeca ServellÛn Orellana
+    H√©ctor M√©ndez Fern√°ndez
+    Rebeca Servell√≥n Orellana
 */
 
 #include "ColaPrioridad.h"
@@ -119,6 +119,22 @@ int main() {
 
 	return 0;
 }
+
+/*Referencias
+
+Heap Data Structures. (s. f.). Tutorialspoint. Recuperado 19 de octubre de 2021,
+de https://www.tutorialspoint.com/data_structures_algorithms/heap_data_structure.htm
+
+CS241: Data Structures & Algorithms II. (s. f.). edu. Recuperado 20 de octubre de 2021,
+de https://www.cpp.edu/%7Eftang/courses/CS241/notes/heap.htm
+
+std::priority_queue - cppreference.com. (s. f.). Cppreference. Recuperado 19 de octubre 
+de 2021, de https://en.cppreference.com/w/cpp/container/priority_queue
+
+Priority Queue Data Structure In C++ With Illustration. (2021, 27 septiembre). Software 
+Testing Help. Recuperado 18 de octubre de 2021, de https://www.softwaretestinghelp.com/priority-queue-in-cpp/
+*/
+
 
 
 
