@@ -3,9 +3,6 @@
 #include"Nodo.h"
 #include<string>
 #include<sstream>
-#include<iostream>
-
-
 
 template<class T>
 class IteradorListaDoble;
@@ -40,9 +37,6 @@ public:
 	void heapifyUp(Nodo<T>*, int);
 	void heapifyDown(Nodo<T>*, int);
 	void swap(Nodo<T>*, Nodo<T>*);
-	void refreshOuterPointers(Nodo<T>* A);
-	int areTheyNeighbours(Nodo<T>* A, Nodo<T>* B);
-
 };
 
 template<class T>
@@ -183,7 +177,7 @@ inline std::string ListaDoble<T>::toString() {
 		temporal = temporal->getNext();
 		ss << "NULLPTR  <-> ";
 		while (temporal != nullptr && temporal!=fin) {
-			ss << *(temporal->dato);
+			ss << *temporal->getDato();
 			ss << " <-> ";
 			temporal = temporal->getNext();
 		}
@@ -453,21 +447,6 @@ void ListaDoble<T>::swap(Nodo<T>* primeroPtr, Nodo<T>* segundoPtr) {
 	primeroPtr->setDato(segundoPtr->getDato());
 	segundoPtr->setDato(aux);
 }
-
-template<class T>
-int ListaDoble<T>::areTheyNeighbours(Nodo<T>* A, Nodo<T>* B) {
-	return (A->next == B && B->prev == A) || (A->prev == B && B->next == A);
-}
-
-template<class T>
-void ListaDoble<T>::refreshOuterPointers(Nodo<T>* A) {
-	if (A->prev != NULL)
-		A->prev->next = A;
-
-	if (A->next != NULL)
-		A->next->prev = A;
-}
-
 
 
 #endif 

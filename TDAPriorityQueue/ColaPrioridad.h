@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TDAPRIORITYQUEUE_COLAPRIORIDAD_H
+#define TDAPRIORITYQUEUE_COLAPRIORIDAD_H
 #include "ListaDoble.h"
 template<class T>
 class ColaPrioridad
@@ -19,7 +20,7 @@ public:
 	void add(T* value);
 	T* pop();
 	T* front() const;
-	int size();
+	int size() const;
 
 };
 
@@ -68,7 +69,13 @@ inline void ColaPrioridad<T>::add(T* value)
 template<class T>
 inline T* ColaPrioridad<T>::pop()
 {
-	return heap->eliminar();
+	if (heap->getPrimero()) {
+		return heap->eliminar();
+	}
+	else {
+		throw std::string("\nLa cola esta vacia\n");
+	}
+	return nullptr;
 }
 
 template<class T>
@@ -78,15 +85,19 @@ inline T* ColaPrioridad<T>::front() const
 	{
 		return heap->getPrimero()->dato;
 	}
+	else {
+		throw std::string("\nLa cola esta vacia\n");
+	}
 	return nullptr;
 }
 
 template<class T>
-inline int ColaPrioridad<T>::size()
+inline int ColaPrioridad<T>::size() const
 {
 	return heap->getCuentaNodos();
 }
 
+#endif 
 
 
 

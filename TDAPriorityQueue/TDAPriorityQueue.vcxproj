@@ -143,9 +143,11 @@
     <ClInclude Include="IteradorListaDoble.h" />
     <ClInclude Include="ListaDoble.h" />
     <ClInclude Include="Nodo.h" />
+    <ClInclude Include="Paciente.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ColaPrioridad.cpp" />
+    <ClCompile Include="Paciente.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
