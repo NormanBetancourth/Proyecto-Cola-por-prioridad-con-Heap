@@ -20,7 +20,7 @@ private:
 	Nodo<T>* fin;
 	int cuentaNodos;
 	Nodo<T>* buscarHijo(int);
-	int ban;
+	bool ban;
 public:
 	int getCuentaNodos();
 	ListaDoble(bool isMax = true);

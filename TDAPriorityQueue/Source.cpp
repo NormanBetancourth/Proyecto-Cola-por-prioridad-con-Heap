@@ -36,7 +36,7 @@ int main() {
     int cedula = 0;
     int estadoDeGravedad = 0;
     std::string nombrePaciente;
-    bool esMaximo = true;
+    int esMaximo = 1;
 
     std::cout << "PROGRAMA PARA ATENDER COLA DE PACIENTES SEGUN SU ESTADO DE GRAVEDAD\n\n";
     std::cout << "Para iniciar, se tiene que elegir el orden de prioridad de la cola respectiva\n\n";
@@ -45,8 +45,8 @@ int main() {
     std::cout << "Ingrese la opcion: ";
     std::cin >> esMaximo;
 
-    esMaximo ?  colaPrioridadPacientes = new ColaPrioridad<Paciente>(nullptr, esMaximo) :
-        colaPrioridadPacientes = new ColaPrioridad<Paciente>(nullptr, 0);
+    esMaximo == 1 ?  colaPrioridadPacientes = new ColaPrioridad<Paciente>(nullptr, true) :
+        colaPrioridadPacientes = new ColaPrioridad<Paciente>(nullptr, false);
   
     while (opcion != 4) {
 
