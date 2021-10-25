@@ -7,16 +7,15 @@ template<class T>
 class ColaPrioridad
 {
 private:
-	ListaDoble<T>* heap;
-	
-public:
-	typedef Nodo<T>* valor;
 	typedef ListaDoble<T>* Heap;
-	
+	typedef Nodo<T>* valor;
+
+	ListaDoble<T>* heap;
+	Heap getHeap();
+public:
 	ColaPrioridad( Heap li = nullptr, bool isMax = true );
 	ColaPrioridad( ColaPrioridad<T>*& colaCopiable);
 	~ColaPrioridad();
-	Heap getHeap();
 
 	bool empty();
 	void add(T* value);
@@ -67,7 +66,7 @@ inline bool ColaPrioridad<T>::empty()
 }
 
 
-agrega elementos a la cola
+//agrega elementos a la cola
 template<class T>
 inline void ColaPrioridad<T>::add(T* value)
 {

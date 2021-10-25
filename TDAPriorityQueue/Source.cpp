@@ -1,10 +1,20 @@
 /*
 Estructuras de Datos EIF 207- Grupo 3
 Proyecto I. Implementación TDA Cola de Prioridad
+
 Integrantes:
     Norman Betancourtt Mairena
     Héctor Méndez Fernández
     Rebeca Servellón Orellana
+
+Planteamiento del problema que resuelve el proyecto
+Este es un programa que se usa en una UCI, por la pandemia los centros
+médicos han estado en alta demanda, es por esto que la UCI va a usar 
+un programa que organice por prioridad con respecto al estado del 
+paciente, la valoración es trabajo del médico a cargo, pero las 
+prioridades están a manos de nuestro programa, a mayor sea el nivel 
+de un paciente, más crítico este se encuentra.
+
 */
 
 #include "ColaPrioridad.h"
@@ -37,7 +47,6 @@ int main() {
 
     esMaximo ?  colaPrioridadPacientes = new ColaPrioridad<Paciente>(nullptr, esMaximo) :
         colaPrioridadPacientes = new ColaPrioridad<Paciente>(nullptr, 0);
-
   
     while (opcion != 4) {
 
@@ -59,11 +68,10 @@ int main() {
             std::cout << "\n[1] Ingresar paciente";
             std::cout << "\n\n";
             std::cout << "Ingrese el nombre: ";
-            std::cin.ignore();
             std::getline(std::cin, nombrePaciente);
             std::cout << "Ingrese la identificacion: ";
             std::cin >> cedula;
-            std::cout << "Ingrese el estado de gravedad [1 (menor gravedad) - 10 (gravedad maxima)]: ";
+            std::cout << "Ingrese el estado de gravedad [1 - 10]: ";
             std::cin >> estadoDeGravedad;
             colaPrioridadPacientes->add(new Paciente(nombrePaciente, cedula, estadoDeGravedad));
         }
@@ -128,10 +136,10 @@ de https://www.tutorialspoint.com/data_structures_algorithms/heap_data_structure
 CS241: Data Structures & Algorithms II. (s. f.). edu. Recuperado 20 de octubre de 2021,
 de https://www.cpp.edu/%7Eftang/courses/CS241/notes/heap.htm
 
-std::priority_queue - cppreference.com. (s. f.). Cppreference. Recuperado 19 de octubre 
+std::priority_queue - cppreference.com. (s. f.). Cppreference. Recuperado 19 de octubre
 de 2021, de https://en.cppreference.com/w/cpp/container/priority_queue
 
-Priority Queue Data Structure In C++ With Illustration. (2021, 27 septiembre). Software 
+Priority Queue Data Structure In C++ With Illustration. (2021, 27 septiembre). Software
 Testing Help. Recuperado 18 de octubre de 2021, de https://www.softwaretestinghelp.com/priority-queue-in-cpp/
 */
 

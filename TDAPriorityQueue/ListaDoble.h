@@ -7,6 +7,12 @@
 template<class T>
 class IteradorListaDoble;
 //Class heap --- esta lista doble sera tratada como heap ---
+// 
+// La variable ban se toma como una bandera para determinar si
+// el ordenamiento del heap se hacia de arriba hacia abajo o viceversa.
+// Cuando el valor es verdadero se toma como un heap de máximos, en
+// caso contrario de mínimos
+
 template<class T>
 class ListaDoble {
 private:
